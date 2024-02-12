@@ -6,7 +6,9 @@ import 'package:motion_tab_bar/MotionTabItem.dart';
 import 'package:motion_tab_bar/helpers/HalfClipper.dart';
 import 'package:motion_tab_bar/helpers/HalfPainter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import 'summary.dart';
+import 'main2.dart';
+import 'main3.dart';
 void main() {
   runApp(MyApp());
 }
@@ -22,6 +24,12 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: MyHomePage(),
+       routes: {
+        '/': (context) => MyHomePage(),
+        '/main2': (context) => Main2Screen(), // Ensure this matches your navigation call
+        '/summary': (context) => SummaryPage(userData: {}),
+      },
+      
     );
   }
 }
