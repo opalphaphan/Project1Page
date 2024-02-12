@@ -40,7 +40,7 @@
 //       body: Container(
 //         decoration: BoxDecoration(
 //           image: DecorationImage(
-//             image: AssetImage('../lib/assets/bg.png'),
+//             image: AssetImage('lib/assets/bg.png'),
 //             fit: BoxFit.cover,
 //           ),
 //         ),
@@ -73,7 +73,7 @@
 //                     ),
 //                     SizedBox(height: 20),
 //                     Image.asset(
-//                       '../lib/assets/dino.png',
+//                       'lib/assets/dino.png',
 //                       height: 120,
 //                     ),
 //                     SizedBox(height: 16),

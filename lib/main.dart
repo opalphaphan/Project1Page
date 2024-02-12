@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('../lib/assets/bg.png'), // Your background image path
+              image: AssetImage('lib/assets/bg.png'), // Your background image path
               fit: BoxFit.cover,
             ),
           ),
@@ -114,12 +114,12 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                   Expanded(
                     child: ListView(
                       children: <Widget>[
-                        _buildListItem('SeunghanRiize', '../lib/assets/Seunghan.jpg', Icons.people),
-                        _buildListItem('SungchanRiize', '../lib/assets/Sungchan.jpg', Icons.people),
-                        _buildListItem('ShotaroRiize', '../lib/assets/Shotaro.jpg', Icons.people),
-                        _buildListItem('SoheeRiize', '../lib/assets/Sohee.jpg', Icons.people),
-                        _buildListItem('EunseokRiize', '../lib/assets/Eunseok.jpg', Icons.people),
-                        _buildListItem('WonbinRiize', '../lib/assets/Wonbin.jpg', Icons.people),
+                        _buildListItem('SeunghanRiize', 'lib/assets/Seunghan.jpg', Icons.people),
+                        _buildListItem('SungchanRiize', 'lib/assets/Sungchan.jpg', Icons.people),
+                        _buildListItem('ShotaroRiize', 'lib/assets/Shotaro.jpg', Icons.people),
+                        _buildListItem('SoheeRiize', 'lib/assets/Sohee.jpg', Icons.people),
+                        _buildListItem('EunseokRiize', 'lib/assets/Eunseok.jpg', Icons.people),
+                        _buildListItem('WonbinRiize', 'lib/assets/Wonbin.jpg', Icons.people),
                       ],
                     ),
                   ),
