@@ -198,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -215,7 +215,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('../lib/assets/bg.png'),
+            image: AssetImage('lib/assets/bg.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -248,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                      SizedBox(height: 20),
                     Image.asset(
-                      '../lib/assets/dino.png',
+                      'lib/assets/dino.png',
                       height: 120,
                     ),
                     SizedBox(height: 20),
