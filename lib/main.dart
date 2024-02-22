@@ -25,8 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(),
        routes: {
-        '/': (context) => MyHomePage(),
-        '/main2': (context) => Main2Screen(), // Ensure this matches your navigation call
+        '/main2': (context) => Main2Screen(), 
         '/summary': (context) => SummaryPage(userData: {}),
       },
       
@@ -69,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           title: Text(name),
           trailing: Icon(statusIcon),
           onTap: () {
-            // Handle the tap if necessary
+            // Handle the tap
           },
         ),
         SizedBox(height: 15),
@@ -89,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('lib/assets/bg.png'), // Your background image path
+              image: AssetImage('lib/assets/bg.png'), 
               fit: BoxFit.cover,
             ),
           ),
@@ -127,6 +126,7 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
               ),
               const Center(
                 child: Text("A"),
+                
               ),
               const Center(
                 child: Text("B"),
@@ -159,9 +159,14 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           tabIconSelectedColor: Colors.white,
           tabBarColor: Colors.white,
           onTabItemSelected: (int value) {
-            setState(() {
-              _motionTabBarController!.index = value;
-            });
+  //           if (value == 0) { // Assuming the search icon is at index 1
+  //   Navigator.pushNamed(context, '/main2'); // Navigate to the search page route
+  // } else {
+  //   setState(() {
+  //     _motionTabBarController!.index = value;
+  //   });
+  // }
+            
           },
           badges: [
             const MotionBadgeWidget(

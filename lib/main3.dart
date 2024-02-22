@@ -156,12 +156,12 @@
 //   }
 // }
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary.dart';
 import 'main2.dart';
+import 'login.dart';
 
 void main() {
   runApp(MyApp());
@@ -181,6 +181,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/main2': (context) => Main2Screen(),
         '/summary': (context) => SummaryPage(userData: {}),
+        '/login': (context) => LoginScreen(),
       },
     );
   }
@@ -322,17 +323,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 227, 142, 170),
-                        onPrimary: Colors.white,
+                        backgroundColor: const Color.fromARGB(255, 227, 142, 170),
+                        foregroundColor: Colors.white,
                       ),
                     ),
                     TextButton(
                       child: Text('Already have an Account ? Login'),
                       onPressed: () {
-                        // Navigate to login screen
+                         Navigator.pushNamed(context, '/login');
                       },
                       style: TextButton.styleFrom(
-                        primary: const Color.fromARGB(255, 63, 158, 235),
+                        foregroundColor: const Color.fromARGB(255, 63, 158, 235),
                       ),
                     ),
                   ],
