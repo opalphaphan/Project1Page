@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
@@ -7,34 +8,42 @@ import 'package:motion_tab_bar/helpers/HalfClipper.dart';
 import 'package:motion_tab_bar/helpers/HalfPainter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/Quote.dart';
+import 'package:project/firebase_options.dart';
 import 'summary.dart';
 import 'main2.dart';
 import 'main3.dart';
 import 'friend.dart';
 import 'Quote.dart';
+import 'data.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    print("Firebase initialization error: $e");
+  }
   runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DinoReads',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
-      home: MyHomePage(),
-      routes: {
-        '/main2': (context) => Main2Screen(),
-        '/summary': (context) => SummaryPage(userData: {}),
-        '/dinoSearch': (context) =>
-            QuotePopup(), // Replace DinoSearchPage with your actual page
-      },
-    );
+  title: 'DinoReads',
+  theme: ThemeData(
+    // Your theme data
+  ),
+  home: MyHomePage(),
+  routes: {
+    '/main2': (context) => Main2Screen(),
+    '/summary': (context) => SummaryPage(userData: {}),
+    '/dinoSearch': (context) => QuotePopup(),
+    '/profile': (context) => Userpage(), // Provide a default title // Ensure that Userpage does not require any input
+  },
+);
   }
 }
 
