@@ -2,13 +2,13 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'main2.dart'; 
 import 'main3.dart'; 
+
 void main() {
-  runApp(MyApp());
+  runApp(MyAppstart());
 }
 
-class MyApp extends StatelessWidget {
+class MyAppstart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,7 +46,7 @@ class MyHomePage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()), 
+                    MaterialPageRoute(builder: (context) => MyApp()), 
                   );
                 },
                 child: Container(
@@ -62,7 +62,7 @@ class MyHomePage extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 15.0),
-                      child: Text('Sign in', style: TextStyle(fontSize: 18.0, color: Colors.white,),),
+                      child: Text('Get Start!', style: TextStyle(fontSize: 16.0, color: Colors.white,),),
                     ),
                   ),
                 ),

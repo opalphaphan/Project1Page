@@ -159,13 +159,13 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           tabIconSelectedColor: Colors.white,
           tabBarColor: Colors.white,
           onTabItemSelected: (int value) {
-  //           if (value == 0) { // Assuming the search icon is at index 1
-  //   Navigator.pushNamed(context, '/main2'); // Navigate to the search page route
-  // } else {
-  //   setState(() {
-  //     _motionTabBarController!.index = value;
-  //   });
-  // }
+            if (value == 0) { // Assuming the search icon is at index 1
+    Navigator.pushNamed(context, '/main2'); // Navigate to the search page route
+  } else {
+    setState(() {
+      _motionTabBarController!.index = value;
+    });
+  }
             
           },
           badges: [
