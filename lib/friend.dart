@@ -6,12 +6,10 @@ import 'package:motion_tab_bar/MotionTabItem.dart';
 import 'package:motion_tab_bar/helpers/HalfClipper.dart';
 import 'package:motion_tab_bar/helpers/HalfPainter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/Quote.dart';
 import 'summary.dart';
 import 'main2.dart';
 import 'main3.dart';
-import 'friend.dart';
-import 'Quote.dart';
+import 'main.dart';
 
 void main() {
   runApp(MyApp());
@@ -31,8 +29,6 @@ class MyApp extends StatelessWidget {
       routes: {
         '/main2': (context) => Main2Screen(),
         '/summary': (context) => SummaryPage(userData: {}),
-        '/dinoSearch': (context) =>
-            QuotePopup(), // Replace DinoSearchPage with your actual page
       },
     );
   }
@@ -181,7 +177,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           tabIconSelectedColor: Colors.white,
           tabBarColor: Colors.white,
           onTabItemSelected: (int value) {
-            //
             if (value == 0) {
               // Assuming the search icon is at index 1
               Navigator.pushNamed(
@@ -191,7 +186,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                 _motionTabBarController!.index = value;
               });
             }
-            //
           },
           badges: [
             const MotionBadgeWidget(
