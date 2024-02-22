@@ -322,8 +322,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: const Color.fromARGB(255, 227, 142, 170),
-                        onPrimary: Colors.white,
+                        foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 227, 142, 170),
                       ),
                     ),
                     TextButton(
@@ -332,7 +331,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // Navigate to login screen
                       },
                       style: TextButton.styleFrom(
-                        primary: const Color.fromARGB(255, 63, 158, 235),
+                        foregroundColor: const Color.fromARGB(255, 63, 158, 235),
                       ),
                     ),
                   ],
