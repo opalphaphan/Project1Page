@@ -1,4 +1,3 @@
-
 // import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 // import 'summary.dart';
@@ -24,7 +23,7 @@
 //         '/main2': (context) => Main2Screen(), // Ensure this matches your navigation call
 //         '/summary': (context) => SummaryPage(userData: {}),
 //       },
-    
+
 //     );
 //   }
 // }
@@ -160,8 +159,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'summary.dart';
+
 import 'main2.dart';
 import 'login.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -199,7 +200,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _emailController = TextEditingController();
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
       if (pickedFile != null) {
@@ -244,10 +246,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: <Widget>[
                     Text(
                       'Welcome !\nSign up to Dinoreads',
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
+                      style: TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.normal),
                       textAlign: TextAlign.left,
                     ),
-                     SizedBox(height: 20),
+                    SizedBox(height: 20),
                     Image.asset(
                       'lib/assets/dino.png',
                       height: 120,
@@ -260,9 +263,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: CircleAvatar(
                         radius: 60,
                         backgroundColor: Color.fromARGB(255, 203, 227, 239),
-                        backgroundImage: _image != null ? FileImage(_image!) : null,
+                        backgroundImage:
+                            _image != null ? FileImage(_image!) : null,
                         child: _image == null
-                            ? Icon(Icons.add_a_photo, size: 60, color: Colors.white)
+                            ? Icon(Icons.add_a_photo,
+                                size: 60, color: Colors.white)
                             : null,
                       ),
                     ),
@@ -319,21 +324,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         };
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => SummaryPage(userData: userData)),
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SummaryPage(userData: userData)),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 227, 142, 170),
+                        backgroundColor:
+                            const Color.fromARGB(255, 227, 142, 170),
                         foregroundColor: Colors.white,
                       ),
                     ),
                     TextButton(
                       child: Text('Already have an Account ? Login'),
                       onPressed: () {
-                         Navigator.pushNamed(context, '/login');
+                        Navigator.pushNamed(context, '/login');
                       },
                       style: TextButton.styleFrom(
-                        foregroundColor: const Color.fromARGB(255, 63, 158, 235),
+                        foregroundColor:
+                            const Color.fromARGB(255, 63, 158, 235),
                       ),
                     ),
                   ],
