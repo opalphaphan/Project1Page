@@ -156,7 +156,13 @@
 //   }
 // }
 
-
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:motion_tab_bar/MotionBadgeWidget.dart';
+import 'package:motion_tab_bar/MotionTabBar.dart';
+import 'package:motion_tab_bar/MotionTabBarController.dart';
+import 'package:project/firebase_options.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -185,7 +191,20 @@ class BookSearchPage extends StatefulWidget {
   _BookSearchPageState createState() => _BookSearchPageState();
 }
 
-class _BookSearchPageState extends State<BookSearchPage> {
+class _BookSearchPageState extends State<BookSearchPage> with TickerProviderStateMixin {
+  MotionTabBarController? _motionTabBarController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _motionTabBarController = MotionTabBarController(
+      initialIndex: 1,
+      length: 5,
+      vsync: this,
+    );
+  }
+
   TextEditingController _controller = TextEditingController();
   List<Book> _books = [];
 
@@ -268,6 +287,75 @@ class _BookSearchPageState extends State<BookSearchPage> {
           },
         ),
       ),
+
+bottomNavigationBar: MotionTabBar(
+        controller: _motionTabBarController,
+        initialSelectedTab: "DinoSearch",
+        labels: const [
+          "DinoReads",
+          "DinoSearch",
+          "DinoMap",
+          "Profile",
+          "DinoGoal"
+        ],
+        icons: const [
+          Icons.book,
+          Icons.search,
+          Icons.map,
+          Icons.people,
+          Icons.flag
+        ],
+        tabSize: 50,
+        tabBarHeight: 55,
+        textStyle: const TextStyle(
+          fontSize: 12,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+        tabIconColor: Colors.blue[600],
+        tabIconSize: 28.0,
+        tabIconSelectedSize: 26.0,
+        tabSelectedColor: Colors.blue[900],
+        tabIconSelectedColor: Colors.white,
+        tabBarColor: Colors.white,
+        onTabItemSelected: (int value) {
+          if (value == 1) {
+              // Assuming the DinoSearch tab is at index 1
+              Navigator.pushNamed(
+                  context, '/dinoSearch'); // Navigate to DinoSearch page
+            } else if (value == 0) {
+              Navigator.pushNamed(context, '/main2');
+            } else if (value == 3) {
+              Navigator.pushNamed(context, '/profile');
+            } else if (value == 2) {
+              Navigator.pushNamed(
+                  context, '/dinocom'); // Navigate to Userpage (data.dart)
+            } else {
+              // Handle other tab selections
+            }
+        },
+        badges: [
+          const MotionBadgeWidget(
+            text: '10+',
+            textColor: Colors.white,
+            color: Color.fromARGB(255, 240, 159, 153),
+            size: 18,
+          ),
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(2),
+          ),
+          null,
+          const MotionBadgeWidget(
+            isIndicator: true,
+            color: Colors.blue,
+            size: 7,
+            show: true,
+          ),
+          null,
+        ],
+      ),
+      
     );
   }
 }

@@ -6,7 +6,6 @@ import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:project/firebase_options.dart';
 
-
 // void main() async {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   try {
@@ -100,7 +99,7 @@ class _UserpageState extends State<Userpage> with TickerProviderStateMixin {
       ),
       bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController,
-        initialSelectedTab: "DinoReads",
+        initialSelectedTab: "Profile",
         labels: const [
           "DinoReads",
           "DinoSearch",
@@ -130,14 +129,19 @@ class _UserpageState extends State<Userpage> with TickerProviderStateMixin {
         tabBarColor: Colors.white,
         onTabItemSelected: (int value) {
           if (value == 1) {
-            // Assuming the DinoSearch tab is at index 1
-            Navigator.pushNamed(
-                context, '/dinoSearch'); // Navigate to DinoSearch page
-          } else if (value == 3) {
-            Navigator.pushNamed(context, '/profile'); // Navigate to Userpage (data.dart)
-          } else {
-            // Handle other tab selections
-          }
+              // Assuming the DinoSearch tab is at index 1
+              Navigator.pushNamed(
+                  context, '/dinoSearch'); // Navigate to DinoSearch page
+            } else if (value == 0) {
+              Navigator.pushNamed(context, '/main2');
+            } else if (value == 3) {
+              Navigator.pushNamed(context, '/profile');
+            } else if (value == 2) {
+              Navigator.pushNamed(
+                  context, '/dinocom'); // Navigate to Userpage (data.dart)
+            } else {
+              // Handle other tab selections
+            }
         },
         badges: [
           const MotionBadgeWidget(
