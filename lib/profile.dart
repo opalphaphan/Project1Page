@@ -60,7 +60,6 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     _buildButton(context, 'Edit'),
-                    _buildButton(context, 'Message'),
                   ],
                 ),
                 SizedBox(height: 20),
