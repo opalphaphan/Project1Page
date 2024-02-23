@@ -37,25 +37,18 @@ dependencies:
   google_fonts: ^4.0.4
   motion_tab_bar: ^2.0.4
   image_picker: ^1.0.7
-<<<<<<< HEAD
   firebase_core: ^2.25.4
   cloud_firestore: ^4.15.5
-=======
-  http: ^0.13.3
->>>>>>> f73ce0ebbf04d8ff5984840497a8796745079a54
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-<<<<<<< HEAD
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^3.0.1
-=======
->>>>>>> f73ce0ebbf04d8ff5984840497a8796745079a54
 # use the latest version of the google_fonts package
 
 # For information on the generic Dart part of this file, see the

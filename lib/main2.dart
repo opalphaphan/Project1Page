@@ -3,13 +3,15 @@ import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'data.dart';
+import 'book.dart';
 
 class Main2Screen extends StatefulWidget {
   @override
   _Main2ScreenState createState() => _Main2ScreenState();
 }
 
-class _Main2ScreenState extends State<Main2Screen> with TickerProviderStateMixin {
+class _Main2ScreenState extends State<Main2Screen>
+    with TickerProviderStateMixin {
   MotionTabBarController? _motionTabBarController;
 
   @override
@@ -173,9 +175,17 @@ class _Main2ScreenState extends State<Main2Screen> with TickerProviderStateMixin
             });
             if (value == 1) {
               // Assuming the DinoSearch tab is at index 1
-              Navigator.pushNamed(context, '/dinoSearch');
+              Navigator.pushNamed(
+                  context, '/dinoSearch'); // Navigate to DinoSearch page
+            } else if (value == 0) {
+              Navigator.pushNamed(context, '/main2');
             } else if (value == 3) {
               Navigator.pushNamed(context, '/profile');
+            } else if (value == 2) {
+              Navigator.pushNamed(
+                  context, '/dinocom'); // Navigate to Userpage (data.dart)
+            } else {
+              // Handle other tab selections
             }
           },
           badges: [

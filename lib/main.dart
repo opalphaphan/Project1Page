@@ -15,7 +15,8 @@ import 'main3.dart';
 import 'friend.dart';
 import 'Quote.dart';
 import 'data.dart';
-
+import 'book.dart';
+import 'friend.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,22 +29,24 @@ void main() async {
   }
   runApp(MyApp());
 }
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-  title: 'DinoReads',
-  theme: ThemeData(
-    // Your theme data
-  ),
-  home: MyHomePage(),
-  routes: {
-    '/main2': (context) => Main2Screen(),
-    '/summary': (context) => SummaryPage(userData: {}),
-    '/dinoSearch': (context) => QuotePopup(),
-    '/profile': (context) => Userpage(), // Provide a default title // Ensure that Userpage does not require any input
-  },
-);
+      title: 'DinoReads',
+      theme: ThemeData(
+          // Your theme data
+          ),
+      home: MyHomePage(),
+      routes: {
+        '/main2': (context) => Main2Screen(),
+        '/summary': (context) => SummaryPage(userData: {}),
+        '/dinoSearch': (context) => BookSearchPage(),
+        '/profile': (context) => Userpage(),
+        '/dinocom': (context) => DinoCom(),
+      },
+    );
   }
 }
 
@@ -143,18 +146,6 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
                     ),
                   ),
                 ],
-              ),
-              const Center(
-                child: Text("A"),
-              ),
-              const Center(
-                child: Text("B"),
-              ),
-              const Center(
-                child: Text("C"),
-              ),
-              const Center(
-                child: Text("D"),
               ),
             ],
           ),
