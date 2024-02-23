@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/material.dart';
+import 'main2.dart'; 
+import 'summary.dart';
+import 'friend.dart';
 void main() => runApp(ChatApp());
 
 class ChatApp extends StatelessWidget {
@@ -9,9 +12,14 @@ class ChatApp extends StatelessWidget {
     return MaterialApp(
       title: 'Chat UI',
       theme: ThemeData(
-        primaryColor: Colors.blue,
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: ChatScreen(),
+      routes: {
+        '/friend': (context) => MyApp(), 
+
+      },
     );
   }
 }
@@ -23,14 +31,14 @@ class ChatScreen extends StatefulWidget {
 
 class ChatScreenState extends State<ChatScreen> {
   final List<Message> messages = [];
-  final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   void _sendMessage() {
-    final text = textEditingController.text;
-    if (text.trim().isNotEmpty) {
+    final text = _controller.text;
+    if (text.isNotEmpty) {
       setState(() {
-        messages.add(Message(text, DateTime.now(), isSender: true));
-        textEditingController.clear();
+        messages.add(Message(text, DateTime.now(), isSentByMe: true));
+        _controller.clear();
       });
     }
   }
@@ -38,57 +46,61 @@ class ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.transparent, 
       appBar: AppBar(
         title: Text('Chat room'),
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: BackButton(color: Colors.black),
         actions: [
           IconButton(
             icon: Icon(Icons.more_vert, color: Colors.black),
             onPressed: () {
-              // More actions
+              Navigator.pushNamed(context, '/friend');
             },
-          )
+          ),
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: ListView.builder(
-              reverse: true,
-              itemCount: messages.length,
-              itemBuilder: (context, index) => MessageBubble(message: messages[messages.length - index - 1]),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("lib/assets/bg.png"), 
+            fit: BoxFit.cover,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 8.0),
-            color: Colors.white,
-            child: SafeArea(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      controller: textEditingController,
-                      decoration: InputDecoration(
-                        hintText: 'Send a message',
-                        border: InputBorder.none,
-                        filled: true,
-                        fillColor: Colors.grey[200],
-                        contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-                      ),
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.send, color: Colors.blue),
-                    onPressed: _sendMessage,
-                  ),
-                ],
+        ),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: ListView.builder(
+                reverse: true,
+                itemCount: messages.length,
+                itemBuilder: (context, index) {
+                  final message = messages[messages.length - 1 - index];
+                  return MessageBubble(message: message);
+                },
               ),
             ),
-          ),
-        ],
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              color: Colors.white,
+              child: SafeArea(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: TextField(
+                        controller: _controller,
+                        decoration: InputDecoration.collapsed(hintText: 'Send a message'),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.send, color: Colors.blue),
+                      onPressed: _sendMessage,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -97,8 +109,8 @@ class ChatScreenState extends State<ChatScreen> {
 class Message {
   String text;
   DateTime timestamp;
-  bool isSender;
-  Message(this.text, this.timestamp, {this.isSender = false});
+  bool isSentByMe;
+  Message(this.text, this.timestamp, {this.isSentByMe = false});
 }
 
 class MessageBubble extends StatelessWidget {
@@ -108,38 +120,26 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bubbleAlign = message.isSender ? CrossAxisAlignment.end : CrossAxisAlignment.start;
-    final bubbleColor = message.isSender ? Colors.blue[200] : Colors.grey[200];
-    final textColor = message.isSender ? Colors.white : Colors.black87;
-    final timeFormat = DateFormat('hh:mm a');
-    final messageTime = timeFormat.format(message.timestamp);
+    final bubbleAlignment = message.isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    final bubbleColor = message.isSentByMe ? Colors.blue[200] : Colors.white;
+    final textColor = message.isSentByMe ? Colors.white : Colors.black87;
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
-        crossAxisAlignment: bubbleAlign,
+        crossAxisAlignment: bubbleAlignment,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
             decoration: BoxDecoration(
               color: bubbleColor,
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(30.0),
             ),
             child: Text(
               message.text,
-              style: TextStyle(
-                color: textColor,
-              ),
+              style: TextStyle(color: textColor),
             ),
           ),
-          SizedBox(height: 4),
-          Text(
-            messageTime,
-            style: TextStyle(
-              color: Colors.grey[600],
-              fontSize: 10,
-            ),
-          )
         ],
       ),
     );

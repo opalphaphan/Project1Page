@@ -27,7 +27,6 @@ class MyApp extends StatelessWidget {
       ),
       home: DinoCom(),
       routes: {
- 
       },
     );
   }
