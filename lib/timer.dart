@@ -1,174 +1,10 @@
-
-// import 'dart:async';
-// import 'package:flutter/material.dart';
-
-// void main() => runApp(MyApp());
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Dino Timer',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: TimerPage(),
-//     );
-//   }
-// }
-
-// class TimerPage extends StatefulWidget {
-//   @override
-//   _TimerPageState createState() => _TimerPageState();
-// }
-
-// class _TimerPageState extends State<TimerPage> {
-//   Timer? _timer;
-//   int _seconds = 0;
-//   List<String> _recordedTimes = [];
-
-//   void _startTimer() {
-//     if (_timer != null && _timer!.isActive) return;
-//     _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-//       setState(() {
-//         _seconds++;
-//       });
-//     });
-//   }
-
-//   void _stopTimer() {
-//     if (_timer != null) {
-//       _timer!.cancel();
-//     }
-//   }
-
-//   void _restartTimer() {
-//     _stopTimer();
-//     setState(() {
-//       _seconds = 0;
-//     });
-//   }
-
-//   void _recordTime() {
-//     setState(() {
-//       _recordedTimes.add(_formatTime(_seconds));
-//     });
-//   }
-
-//   String _formatTime(int totalSeconds) {
-//     int minutes = totalSeconds ~/ 60;
-//     int seconds = totalSeconds % 60;
-//     return minutes.toString().padLeft(2, '0') + ':' + seconds.toString().padLeft(2, '0');
-//   }
-
-//   @override
-//   void dispose() {
-//     _timer?.cancel();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Dino Timer'),
-//         actions: <Widget>[
-//           IconButton(
-//             icon: Icon(Icons.home),
-//             onPressed: () {
-//               Navigator.pop(context);
-//             },
-//           ),
-//         ],
-//       ),
-//       body: Container(
-//         decoration: BoxDecoration(
-//           image: DecorationImage(
-//             image: AssetImage('lib/assets/bg.png'),
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               _formatTime(_seconds),
-//               style: TextStyle(fontSize: 50),
-//             ),
-//             SizedBox(height: 20),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.center,
-//               children: [
-//                 ElevatedButton(
-//                   onPressed: _startTimer,
-//                   child: Text('Start'),
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.blue,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(20.0),
-//                     ),
-//                     elevation: 5.0,
-//                   ),
-//                 ),
-//                 SizedBox(width: 20),
-//                 ElevatedButton(
-//                   onPressed: _stopTimer,
-//                   child: Text('Stop'),
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.red,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(20.0),
-//                     ),
-//                     elevation: 5.0,
-//                   ),
-//                 ),
-//                 SizedBox(width: 20),
-//                 ElevatedButton(
-//                   onPressed: _restartTimer,
-//                   child: Text('Restart'),
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.yellow,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(20.0),
-//                     ),
-//                     elevation: 5.0,
-//                   ),
-//                 ),
-//                 SizedBox(width: 20),
-//                 ElevatedButton(
-//                   onPressed: _recordTime,
-//                   child: Text('Record'),
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.green,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(20.0),
-//                     ),
-//                     elevation: 5.0,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: 20),
-//             Expanded(
-//               child: ListView.builder(
-//                 itemCount: _recordedTimes.length,
-//                 itemBuilder: (context, index) {
-//                   return ListTile(
-//                     title: Text('Record ${index + 1}: ${_recordedTimes[index]}'),
-//                   );
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:motion_tab_bar/MotionBadgeWidget.dart';
+import 'package:motion_tab_bar/MotionTabBar.dart';
+import 'package:motion_tab_bar/MotionTabBarController.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -190,10 +26,22 @@ class TimerPage extends StatefulWidget {
   _TimerPageState createState() => _TimerPageState();
 }
 
-class _TimerPageState extends State<TimerPage> {
+class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
+  late MotionTabBarController _motionTabBarController;
   Timer? _timer;
   int _seconds = 0;
   List<String> _recordedTimes = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _motionTabBarController = MotionTabBarController(
+      initialIndex: 1,
+      length: 5,
+      vsync: this,
+    );
+  }
 
   void _startTimer() {
     if (_timer != null && _timer!.isActive) return;
@@ -205,9 +53,7 @@ class _TimerPageState extends State<TimerPage> {
   }
 
   void _stopTimer() {
-    if (_timer != null) {
-      _timer!.cancel();
-    }
+    _timer?.cancel();
   }
 
   void _restartTimer() {
@@ -226,7 +72,9 @@ class _TimerPageState extends State<TimerPage> {
   String _formatTime(int totalSeconds) {
     int minutes = totalSeconds ~/ 60;
     int seconds = totalSeconds % 60;
-    return minutes.toString().padLeft(2, '0') + ':' + seconds.toString().padLeft(2, '0');
+    return minutes.toString().padLeft(2, '0') +
+        ':' +
+        seconds.toString().padLeft(2, '0');
   }
 
   @override
@@ -244,7 +92,6 @@ class _TimerPageState extends State<TimerPage> {
       ),
       body: Stack(
         children: [
-          // Background image
           Positioned.fill(
             child: Image.asset(
               'lib/assets/bg.png',
@@ -270,19 +117,22 @@ class _TimerPageState extends State<TimerPage> {
                   ElevatedButton(
                     onPressed: _stopTimer,
                     child: Text('Stop'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   ),
                   SizedBox(width: 20),
                   ElevatedButton(
                     onPressed: _restartTimer,
                     child: Text('Restart'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.yellow),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.yellow),
                   ),
                   SizedBox(width: 20),
                   ElevatedButton(
                     onPressed: _recordTime,
                     child: Text('Record'),
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   ),
                 ],
               ),
@@ -292,7 +142,8 @@ class _TimerPageState extends State<TimerPage> {
                   itemCount: _recordedTimes.length,
                   itemBuilder: (context, index) {
                     return ListTile(
-                      title: Text('Record ${index + 1}: ${_recordedTimes[index]}'),
+                      title:
+                          Text('Record ${index + 1}: ${_recordedTimes[index]}'),
                     );
                   },
                 ),
@@ -309,6 +160,81 @@ class _TimerPageState extends State<TimerPage> {
               },
             ),
           ),
+        ],
+      ),
+      bottomNavigationBar: MotionTabBar(
+        controller: _motionTabBarController,
+        initialSelectedTab: "DinoGoal",
+        labels: const [
+          "DinoReads",
+          "DinoSearch",
+          "DinoMap",
+          "Profile",
+          "DinoGoal"
+        ],
+        icons: const [
+          Icons.book,
+          Icons.search,
+          Icons.map,
+          Icons.people,
+          Icons.flag
+        ],
+        tabSize: 50,
+        tabBarHeight: 55,
+        textStyle: const TextStyle(
+          fontSize: 12,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+        tabIconColor: Colors.blue[600],
+        tabIconSize: 28.0,
+        tabIconSelectedSize: 26.0,
+        tabSelectedColor: Colors.blue[900],
+        tabIconSelectedColor: Colors.white,
+        tabBarColor: Colors.white,
+        onTabItemSelected: (int value) {
+          if (value == 1) {
+            Navigator.pushNamed(
+              context,
+              '/dinoSearch',
+            );
+          } else if (value == 0) {
+            Navigator.pushNamed(context, '/main2');
+          } else if (value == 3) {
+            Navigator.pushNamed(context, '/profile');
+          } else if (value == 2) {
+            Navigator.pushNamed(
+              context,
+              '/dinocom',
+            );
+          } else if (value == 4) {
+            Navigator.pushNamed(
+              context,
+              '/dinogoal',
+            );
+          } else {
+            // Handle other tab selections
+          }
+        },
+        badges: [
+          const MotionBadgeWidget(
+            text: '10+',
+            textColor: Colors.white,
+            color: Color.fromARGB(255, 240, 159, 153),
+            size: 18,
+          ),
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(2),
+          ),
+          null,
+          const MotionBadgeWidget(
+            isIndicator: true,
+            color: Colors.blue,
+            size: 7,
+            show: true,
+          ),
+          null,
         ],
       ),
     );

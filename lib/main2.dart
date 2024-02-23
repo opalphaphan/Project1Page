@@ -4,6 +4,9 @@ import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'data.dart';
 import 'book.dart';
+import 'timer.dart';
+import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class Main2Screen extends StatefulWidget {
   @override
@@ -75,7 +78,13 @@ class _Main2ScreenState extends State<Main2Screen>
                         Text('Continue to reach Level 5'),
                         Text('Start your read now'),
                         ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TimerPage(),
+                                ));
+                          },
                           child: Text('Start!'),
                         ),
                       ],
@@ -182,8 +191,10 @@ class _Main2ScreenState extends State<Main2Screen>
             } else if (value == 3) {
               Navigator.pushNamed(context, '/profile');
             } else if (value == 2) {
-              Navigator.pushNamed(
-                  context, '/dinocom'); // Navigate to Userpage (data.dart)
+              Navigator.pushNamed(context, '/dinocom');
+              // Navigate to Userpage (data.dart)
+            } else if (value == 4) {
+              Navigator.pushNamed(context, '/dinogoal');
             } else {
               // Handle other tab selections
             }

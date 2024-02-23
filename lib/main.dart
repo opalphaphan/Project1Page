@@ -9,6 +9,7 @@ import 'package:motion_tab_bar/helpers/HalfPainter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:project/Quote.dart';
 import 'package:project/firebase_options.dart';
+import 'package:project/timer.dart';
 import 'summary.dart';
 import 'main2.dart';
 import 'main3.dart';
@@ -17,6 +18,7 @@ import 'Quote.dart';
 import 'data.dart';
 import 'book.dart';
 import 'friend.dart';
+import 'timer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +47,7 @@ class MyApp extends StatelessWidget {
         '/dinoSearch': (context) => BookSearchPage(),
         '/profile': (context) => Userpage(),
         '/dinocom': (context) => DinoCom(),
+        '/dinogoal': (context) => TimerPage(),
       },
     );
   }
