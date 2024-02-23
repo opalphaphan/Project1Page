@@ -39,11 +39,6 @@ dependencies:
   image_picker: ^1.0.7
   firebase_core: ^2.25.4
   cloud_firestore: ^4.15.5
-<<<<<<< HEAD
-=======
-  http: ^0.13.3
-  flutter_form_builder: ^9.2.1
->>>>>>> 7caedc0b1c94921e74bfc9e3930a2fe881fc2396
 
 dev_dependencies:
   flutter_test:
