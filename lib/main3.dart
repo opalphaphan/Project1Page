@@ -40,9 +40,14 @@ class MyApp extends StatelessWidget {
       // Define routes for navigation
       routes: {
         '/': (context) => SignUpScreen(), // Home route
-        '/summary': (context) => SummaryPage(), // Summary route
-        '/login': (context) => LoginScreen(), // Add other routes as needed
-        '/main2':(context) => Main2Screen(),
+         '/main2': (context) => Main2Screen(),
+        '/summary': (context) => SummaryPage(),
+        '/login': (context) => LoginScreen(),
+        '/dinoSearch': (context) => BookSearchPage(),
+        '/profile': (context) => Userpage(),
+        '/dinocom': (context) => DinoCom(),
+        '/dinogoal': (context) => TimerPage(),
+        '/main3': (context) => SignUpScreen(),
       },
     );
   }

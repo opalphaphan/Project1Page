@@ -5,6 +5,7 @@ import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'book.dart';
 import 'timer.dart';
+import 'main.dart';
 
 class Main2Screen extends StatefulWidget {
   @override
