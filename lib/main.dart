@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(),
       routes: {
         '/main2': (context) => Main2Screen(),
-        '/summary': (context) => SummaryPage(userData: {}),
+        // '/summary': (context) => SummaryPage(userData: {}),
         '/dinoSearch': (context) => BookSearchPage(),
         '/profile': (context) => Userpage(),
         '/dinocom': (context) => DinoCom(),

@@ -328,8 +328,10 @@ bottomNavigationBar: MotionTabBar(
             } else if (value == 3) {
               Navigator.pushNamed(context, '/profile');
             } else if (value == 2) {
-              Navigator.pushNamed(
-                  context, '/dinocom'); // Navigate to Userpage (data.dart)
+              Navigator.pushNamed(context, '/dinocom');
+              // Navigate to Userpage (data.dart)
+            } else if (value == 4) {
+              Navigator.pushNamed(context, '/dinogoal');
             } else {
               // Handle other tab selections
             }

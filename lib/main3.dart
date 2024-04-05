@@ -1,170 +1,29 @@
-// import 'package:flutter/material.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'summary.dart';
-// import 'main3.dart'; // Import your main3.dart file
-// import 'main2.dart'; // Import your main2.dart file
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'DinoReads Sign Up',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         textTheme: GoogleFonts.poppinsTextTheme(),
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: SignUpScreen(),
-//       routes: {
-//         '/main2': (context) => Main2Screen(), // Ensure this matches your navigation call
-//         '/summary': (context) => SummaryPage(userData: {}),
-//       },
-
-//     );
-//   }
-// }
-
-// class SignUpScreen extends StatelessWidget {
-//   final TextEditingController _fullnameController = TextEditingController();
-//   final TextEditingController _usernameController = TextEditingController();
-//   final TextEditingController _emailController = TextEditingController();
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Container(
-//         decoration: BoxDecoration(
-//           image: DecorationImage(
-//             image: AssetImage('lib/assets/bg.png'),
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//         child: Center(
-//           child: SingleChildScrollView(
-//             child: Padding(
-//               padding: EdgeInsets.all(16.0),
-//               child: Container(
-//                 padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
-//                 decoration: BoxDecoration(
-//                   color: Colors.white,
-//                   borderRadius: BorderRadius.circular(12.0),
-//                   boxShadow: [
-//                     BoxShadow(
-//                       color: Colors.black26,
-//                       blurRadius: 6.0,
-//                       offset: Offset(0, 2),
-//                     ),
-//                   ],
-//                 ),
-//                 child: Column(
-//                   mainAxisSize: MainAxisSize.min,
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   crossAxisAlignment: CrossAxisAlignment.stretch,
-//                   children: <Widget>[
-//                     Text(
-//                       'Welcome !\nSign up to Dinoreads',
-//                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.normal),
-//                       textAlign: TextAlign.left,
-//                     ),
-//                     SizedBox(height: 20),
-//                     Image.asset(
-//                       'lib/assets/dino.png',
-//                       height: 120,
-//                     ),
-//                     SizedBox(height: 16),
-//                     TextField(
-//                       controller: _fullnameController,
-//                       decoration: InputDecoration(
-//                         labelText: 'Fullname',
-//                         border: OutlineInputBorder(),
-//                       ),
-//                     ),
-//                     SizedBox(height: 16),
-//                     TextField(
-//                       controller: _usernameController,
-//                       decoration: InputDecoration(
-//                         labelText: 'Username',
-//                         border: OutlineInputBorder(),
-//                       ),
-//                     ),
-//                     SizedBox(height: 16),
-//                     TextField(
-//                       controller: _emailController,
-//                       decoration: InputDecoration(
-//                         labelText: 'Email',
-//                         border: OutlineInputBorder(),
-//                       ),
-//                       keyboardType: TextInputType.emailAddress,
-//                     ),
-//                     SizedBox(height: 16),
-//                     TextField(
-//                       obscureText: true,
-//                       decoration: InputDecoration(
-//                         labelText: 'Password',
-//                         border: OutlineInputBorder(),
-//                       ),
-//                     ),
-//                     SizedBox(height: 16),
-//                     TextField(
-//                       obscureText: true,
-//                       decoration: InputDecoration(
-//                         labelText: 'Confirm Password',
-//                         border: OutlineInputBorder(),
-//                       ),
-//                     ),
-//                     SizedBox(height: 24),
-//                     ElevatedButton(
-//                       child: Text('Register'),
-//                       onPressed: () {
-//                         final userData = {
-//                           'fullname': _fullnameController.text,
-//                           'username': _usernameController.text,
-//                           'email': _emailController.text,
-//                         };
-//                         Navigator.push(
-//                           context,
-//                           MaterialPageRoute(builder: (context) => SummaryPage(userData: userData)),
-//                         );
-//                       },
-//                       style: ElevatedButton.styleFrom(
-//                         primary: Colors.pink,
-//                         onPrimary: Colors.white,
-//                       ),
-//                     ),
-//                     TextButton(
-//                       child: Text('Already have an Account ? Login'),
-//                       onPressed: () {
-//                         // Navigate to login screen
-//                       },
-//                       style: TextButton.styleFrom(
-//                         primary: Colors.blue,
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/book.dart';
+import 'data.dart';
+import 'firebase_options.dart';
+import 'friend.dart';
 import 'summary.dart';
-
 import 'main2.dart';
 import 'login.dart';
+import 'timer.dart';
+import 'data.dart';
 
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  // Initialize Firebase
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(MyApp());
 }
 
@@ -178,11 +37,12 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: SignUpScreen(),
+      // Define routes for navigation
       routes: {
-        '/main2': (context) => Main2Screen(),
-        '/summary': (context) => SummaryPage(userData: {}),
-        '/login': (context) => LoginScreen(),
+        '/': (context) => SignUpScreen(), // Home route
+        '/summary': (context) => SummaryPage(), // Summary route
+        '/login': (context) => LoginScreen(), // Add other routes as needed
+        '/main2':(context) => Main2Screen(),
       },
     );
   }
@@ -198,6 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _pickImage() async {
     final pickedFile =
@@ -210,6 +71,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print('No image selected.');
       }
     });
+  }
+
+  void registerUser(BuildContext context) async {
+    try {
+      // Create user with email and password
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+
+      // Save additional user data to Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userCredential.user!.uid)
+          .set({
+        'fullname': _fullnameController.text,
+        'username': _usernameController.text,
+        'email': _emailController.text,
+        // Add additional fields as needed
+      });
+
+      // Optionally, upload profile picture to Firebase Storage and save URL to Firestore
+
+      // Navigate to the SummaryPage and pass the user data as arguments
+      Navigator.pushNamed(context, '/summary', arguments: {
+        'fullname': _fullnameController.text,
+        'username': _usernameController.text,
+        'email': _emailController.text,
+        // Add additional fields as needed
+      });
+    } catch (e) {
+      print('Error registering user: $e');
+    }
   }
 
   @override
@@ -227,11 +122,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                padding:
+                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.0),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black26,
                       blurRadius: 6.0,
@@ -245,15 +141,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     Text(
-                      'Welcome !\nSign up to Dinoreads',
+                      'Welcome!\nSign up to DinoReads',
                       style: TextStyle(
                           fontSize: 24, fontWeight: FontWeight.normal),
                       textAlign: TextAlign.left,
-                    ),
-                    SizedBox(height: 20),
-                    Image.asset(
-                      'lib/assets/dino.png',
-                      height: 120,
                     ),
                     SizedBox(height: 20),
                     GestureDetector(
@@ -298,40 +189,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     SizedBox(height: 16),
                     TextField(
+                      controller: _passwordController,
                       obscureText: true,
                       decoration: InputDecoration(
                         labelText: 'Password',
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    SizedBox(height: 16),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: 'Confirm Password',
-                        border: OutlineInputBorder(),
-                      ),
-                    ),
                     SizedBox(height: 24),
                     ElevatedButton(
+                      onPressed: () => registerUser(context),
                       child: Text('Register'),
-                      onPressed: () {
-                        final userData = {
-                          'fullname': _fullnameController.text,
-                          'username': _usernameController.text,
-                          'email': _emailController.text,
-                          'profilePicture': _image,
-                        };
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  SummaryPage(userData: userData)),
-                        );
-                      },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor:
-                            const Color.fromARGB(255, 227, 142, 170),
+                        backgroundColor: const Color.fromARGB(255, 227, 142, 170),
                         foregroundColor: Colors.white,
                       ),
                     ),
@@ -350,6 +220,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class SummaryPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Extract arguments passed from the SignUpScreen
+    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    final File? profilePicture = args['profilePicture'] as File?;
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Summary Page'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            Text('Account', style: TextStyle(fontSize: 24)),
+            SizedBox(height: 20),
+            CircleAvatar(
+              radius: 60,
+              backgroundImage: profilePicture != null ? FileImage(profilePicture) : null,
+              child: profilePicture == null
+                  ? Icon(Icons.person, size: 60, color: Colors.grey)
+                  : null,
+            ),
+            SizedBox(height: 20),
+            Text('Fullname: ${args['fullname']}'),
+            Text('Username: ${args['username']}'),
+            Text('Email: ${args['email']}'),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('Edit'),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/main2');
+              },
+              child: Text('Confirm'),
+            ),
+          ],
         ),
       ),
     );

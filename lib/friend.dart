@@ -152,21 +152,19 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
           if (value == 1) {
             // Assuming the DinoSearch tab is at index 1
             Navigator.pushNamed(
-              context,
-              '/dinoSearch',
-            ); // Navigate to DinoSearch page
-          } else if (value == 0) {
-            Navigator.pushNamed(context, '/main2');
-          } else if (value == 3) {
-            Navigator.pushNamed(context, '/profile');
-          } else if (value == 2) {
-            Navigator.pushNamed(
-              context,
-              '/dinocom',
-            ); // Navigate to Userpage (data.dart)
-          } else {
-            // Handle other tab selections
-          }
+              context, '/dinoSearch'); // Navigate to DinoSearch page
+            } else if (value == 0) {
+              Navigator.pushNamed(context, '/main2');
+            } else if (value == 3) {
+              Navigator.pushNamed(context, '/profile');
+            } else if (value == 2) {
+              Navigator.pushNamed(context, '/dinocom');
+              // Navigate to Userpage (data.dart)
+            } else if (value == 4) {
+              Navigator.pushNamed(context, '/dinogoal');
+            } else {
+              // Handle other tab selections
+            }
         },
         badges: [
           const MotionBadgeWidget(
