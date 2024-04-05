@@ -111,8 +111,8 @@ class _UserpageState extends State<Userpage> with TickerProviderStateMixin {
         icons: const [
           Icons.book,
           Icons.search,
-          Icons.map,
           Icons.people,
+          Icons.map,
           Icons.flag
         ],
         tabSize: 50,

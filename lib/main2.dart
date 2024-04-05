@@ -5,7 +5,6 @@ import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'book.dart';
 import 'timer.dart';
-import 'main.dart';
 
 class Main2Screen extends StatefulWidget {
   @override
@@ -164,8 +163,8 @@ class _Main2ScreenState extends State<Main2Screen>
           icons: const [
             Icons.book,
             Icons.search,
-            Icons.map,
             Icons.people,
+            Icons.map,
             Icons.flag
           ],
           tabSize: 50,

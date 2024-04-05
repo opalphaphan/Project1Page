@@ -292,19 +292,19 @@ bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController,
         initialSelectedTab: "DinoSearch",
         labels: const [
-          "DinoReads",
-          "DinoSearch",
-          "DinoMap",
-          "Profile",
-          "DinoGoal"
-        ],
-        icons: const [
-          Icons.book,
-          Icons.search,
-          Icons.map,
-          Icons.people,
-          Icons.flag
-        ],
+            "DinoReads",
+            "DinoSearch",
+            "DinoMap",
+            "Profile",
+            "DinoGoal"
+          ],
+          icons: const [
+            Icons.book,
+            Icons.search,
+            Icons.people,
+            Icons.map,
+            Icons.flag
+          ],
         tabSize: 50,
         tabBarHeight: 55,
         textStyle: const TextStyle(

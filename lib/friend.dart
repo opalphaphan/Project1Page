@@ -1,36 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
-import 'package:motion_tab_bar/MotionTabItem.dart';
-import 'package:motion_tab_bar/helpers/HalfClipper.dart';
-import 'package:motion_tab_bar/helpers/HalfPainter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'summary.dart';
-import 'main2.dart';
-import 'main3.dart';
-import 'main.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DinoReads',
-      theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: GoogleFonts.poppinsTextTheme(),
-      ),
-      home: DinoCom(),
-      routes: {
-      },
-    );
-  }
-}
 
 class DinoCom extends StatefulWidget {
   @override
@@ -45,7 +18,7 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
     super.initState();
 
     _motionTabBarController = MotionTabBarController(
-      initialIndex: 1,
+      initialIndex: 2,
       length: 5,
       vsync: this,
     );
@@ -57,22 +30,36 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
     _motionTabBarController!.dispose();
   }
 
-  Widget _buildListItem(String name, String imagePath, IconData statusIcon) {
-    return Column(
-      children: [
-        ListTile(
-          leading: CircleAvatar(
-            backgroundImage: AssetImage(imagePath),
-          ),
-          title: Text(name),
-          trailing: Icon(statusIcon),
-          onTap: () {
-            // Handle the tap
-          },
-        ),
-        SizedBox(height: 15),
-      ],
-    );
+  void _addFriend(String friendName) async {
+    if (friendName.isNotEmpty) {
+      try {
+        await FirebaseFirestore.instance.collection('friends').add({
+          'name': friendName,
+        });
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Friend added successfully')),
+        );
+      } catch (e) {
+        print('Error adding friend: $e');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to add friend')),
+        );
+      }
+    }
+  }
+
+  void _deleteFriend(String friendId) async {
+    try {
+      await FirebaseFirestore.instance.collection('friends').doc(friendId).delete();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Friend deleted successfully')),
+      );
+    } catch (e) {
+      print('Error deleting friend: $e');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete friend')),
+      );
+    }
   }
 
   @override
@@ -93,26 +80,56 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Search Friends',
-                  suffixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      onSubmitted: (value) {
+                        _addFriend(value);
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'Search Friends',
+                        suffixIcon: Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(25.0)),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
             Expanded(
-              child: ListView(
-                children: <Widget>[
-                  _buildListItem('SeunghanRiize', 'lib/assets/Seunghan.jpg', Icons.people),
-                  _buildListItem('SungchanRiize', 'lib/assets/Sungchan.jpg', Icons.people),
-                  _buildListItem('ShotaroRiize', 'lib/assets/Shotaro.jpg', Icons.people),
-                  _buildListItem('SoheeRiize', 'lib/assets/Sohee.jpg', Icons.people),
-                  _buildListItem('EunseokRiize', 'lib/assets/Eunseok.jpg', Icons.people),
-                  _buildListItem('WonbinRiize', 'lib/assets/Wonbin.jpg', Icons.people),
-                ],
+              child: StreamBuilder<QuerySnapshot>(
+                stream: FirebaseFirestore.instance.collection('friends').snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else {
+                    final List<DocumentSnapshot> friends = snapshot.data!.docs;
+                    return ListView.builder(
+                      itemCount: friends.length,
+                      itemBuilder: (context, index) {
+                        final friendName = friends[index]['name'];
+                        final friendId = friends[index].id; // Get the document ID
+                        return ListTile(
+                          title: Text(friendName),
+                          leading: CircleAvatar(
+                            child: Text(friendName[0]), // Display initial of friend name
+                          ),
+                          trailing: IconButton(
+                            icon: Icon(Icons.delete),
+                            onPressed: () {
+                              _deleteFriend(friendId); // Call delete function on button press
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
               ),
             ),
           ],
@@ -131,8 +148,8 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
         icons: const [
           Icons.book,
           Icons.search,
-          Icons.map,
           Icons.people,
+          Icons.map,
           Icons.flag
         ],
         tabSize: 50,
@@ -149,22 +166,15 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
         tabIconSelectedColor: Colors.white,
         tabBarColor: Colors.white,
         onTabItemSelected: (int value) {
-          if (value == 1) {
-            // Assuming the DinoSearch tab is at index 1
-            Navigator.pushNamed(
-              context, '/dinoSearch'); // Navigate to DinoSearch page
-            } else if (value == 0) {
-              Navigator.pushNamed(context, '/main2');
-            } else if (value == 3) {
-              Navigator.pushNamed(context, '/profile');
-            } else if (value == 2) {
-              Navigator.pushNamed(context, '/dinocom');
-              // Navigate to Userpage (data.dart)
-            } else if (value == 4) {
-              Navigator.pushNamed(context, '/dinogoal');
-            } else {
-              // Handle other tab selections
-            }
+          if (value == 0) {
+            Navigator.pushNamed(context, '/main2');
+          } else if (value == 1) {
+            Navigator.pushNamed(context, '/dinoSearch');
+          } else if (value == 3) {
+            Navigator.pushNamed(context, '/profile');
+          } else if (value == 4) {
+            Navigator.pushNamed(context, '/dinogoal');
+          }
         },
         badges: [
           const MotionBadgeWidget(
