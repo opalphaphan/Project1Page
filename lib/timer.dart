@@ -335,12 +335,25 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Dino Timer'),
+        appBar: PreferredSize(
+      preferredSize: Size.fromHeight(80.0), 
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        title: Image.asset(
+          'lib/assets/dinotimer.png', 
+          height: 78, 
+        ),
         backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
       ),
+    ),
       body: Stack(
         children: [
+          Positioned.fill(
+            child: Image.asset(
+              'lib/assets/bg.png',
+              fit: BoxFit.cover,
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -412,9 +425,20 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
               ),
             ],
           ),
+          Positioned(
+            top: 20,
+            left: 20,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -426,6 +450,8 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
                 );
               },
               child: Text('View History'),
+               style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white, backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),),
             ),
           ],
         ),
