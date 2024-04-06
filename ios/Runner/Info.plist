@@ -45,5 +45,17 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <string>YES</string>
+	<key>com.google.maps.api.API_KEY</key>
+   <string>AIzaSyAFcQFzD4JKAcQYLZvFstKIplzhl64GafU</string>
+    <key>GMSApiKey</key>
+    <string>AIzaSyAFcQFzD4JKAcQYLZvFstKIplzhl64GafU</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>This app needs access to location when open.</string>
+    <key>io.flutter.embedded_views_preview</key>
+    <true/>
 </dict>
 </plist>
