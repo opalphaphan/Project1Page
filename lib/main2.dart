@@ -39,14 +39,18 @@ class _Main2ScreenState extends State<Main2Screen>
       length: 5,
       child: Scaffold(
          appBar: PreferredSize(
-      preferredSize: Size.fromHeight(80.0), 
+      preferredSize: Size.fromHeight(70), 
+      
       child: AppBar(
         automaticallyImplyLeading: false,
+        
         title: Image.asset(
-          'lib/assets/reads.png', 
-          height: 78, 
+          'lib/assets/dinoread.png', 
+          height: 90, 
+          fit: BoxFit.fitHeight,
         ),
-        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+
+        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       ),
     ),
         body: SafeArea(
@@ -131,30 +135,31 @@ class _Main2ScreenState extends State<Main2Screen>
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Image.asset(
-                        'lib/assets/1.png',
-                        height: 60,
-                        width: 60,
+                        'lib/assets/dn.png',
+                        height: 200,
+                        width: 200,
+                    
                       ),
-                      Column(
-                        children: [
-                          Image.asset(
-                            'lib/assets/4.png',
-                            height: 60,
-                            width: 60,
-                          ),
-                          Text('Find out Trends'),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Image.asset(
-                            'lib/assets/3.png',
-                            height: 60,
-                            width: 60,
-                          ),
-                          Text('Dino Communities'),
-                        ],
-                      ),
+                      // Column(
+                      //   children: [
+                      //     Image.asset(
+                      //       'lib/assets/dn.png',
+                      //       height: 60,
+                      //       width: 60,
+                      //     ),
+                      //     // Text('Find out Trends'),
+                      //   ],
+                      // ),
+                      // Column(
+                      //   children: [
+                      //     Image.asset(
+                      //       'lib/assets/3.png',
+                      //       height: 60,
+                      //       width: 60,
+                      //     ),
+                      //     Text('Dino Communities'),
+                      //   ],
+                      // ),
                     ],
                   ),
                 ],
