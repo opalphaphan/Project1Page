@@ -38,6 +38,17 @@ class _Main2ScreenState extends State<Main2Screen>
     return DefaultTabController(
       length: 5,
       child: Scaffold(
+         appBar: PreferredSize(
+      preferredSize: Size.fromHeight(80.0), 
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        title: Image.asset(
+          'lib/assets/reads.png', 
+          height: 78, 
+        ),
+        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+      ),
+    ),
         body: SafeArea(
           child: Container(
             decoration: BoxDecoration(
@@ -50,6 +61,7 @@ class _Main2ScreenState extends State<Main2Screen>
               padding: EdgeInsets.all(16.0),
               child: Column(
                 children: <Widget>[
+                  
                   // Welcome and user profile section
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
