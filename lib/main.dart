@@ -101,10 +101,17 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
     return DefaultTabController(
       length: 5, // Set the length to the number of tabs in MotionTabBar
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('DINO Community', style: GoogleFonts.poppins()),
-          backgroundColor: Colors.lightBlue,
+        appBar: PreferredSize(
+      preferredSize: Size.fromHeight(80.0), 
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        title: Image.asset(
+          'lib/assets/com.png', 
+          height: 78, 
         ),
+        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+      ),
+    ),
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -159,8 +166,8 @@ class _MyHomePageState extends State<MyHomePage> with TickerProviderStateMixin {
           labels: const [
             "DinoReads",
             "DinoSearch",
+            "DinoCommunity",
             "DinoMap",
-            "Profile",
             "DinoGoal"
           ],
           icons: const [

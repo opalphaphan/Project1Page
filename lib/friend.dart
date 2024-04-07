@@ -65,10 +65,17 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('DINO Community', style: GoogleFonts.poppins()),
-        backgroundColor: Colors.lightBlue,
+      appBar: PreferredSize(
+      preferredSize: Size.fromHeight(80.0), 
+      child: AppBar(
+        automaticallyImplyLeading: false,
+        title: Image.asset(
+          'lib/assets/com.png', 
+          height: 78, 
+        ),
+        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
       ),
+    ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
