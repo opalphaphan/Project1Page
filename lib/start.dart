@@ -1,11 +1,19 @@
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:project/firebase_options.dart';
 import 'login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'main3.dart'; 
 
-void main() {
+Future<void> main() async {
+
+   await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  
   runApp(MyAppstart());
+  
 }
 
 class MyAppstart extends StatelessWidget {
