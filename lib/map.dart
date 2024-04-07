@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:motion_tab_bar/MotionBadgeWidget.dart';
+import 'package:motion_tab_bar/MotionTabBar.dart';
+import 'package:motion_tab_bar/MotionTabBarController.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,10 +27,28 @@ class LibraryFinder extends StatefulWidget {
   _LibraryFinderState createState() => _LibraryFinderState();
 }
 
-class _LibraryFinderState extends State<LibraryFinder> {
+class _LibraryFinderState extends State<LibraryFinder> with TickerProviderStateMixin {
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(0, 0);
   Set<Marker> markers = {};
+  MotionTabBarController? _motionTabBarController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _motionTabBarController = MotionTabBarController(
+      initialIndex: 3,
+      length: 5,
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _motionTabBarController!.dispose();
+  }
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -161,101 +182,68 @@ class _LibraryFinderState extends State<LibraryFinder> {
             }
           }
         },
+      ),bottomNavigationBar: MotionTabBar(
+        controller: _motionTabBarController,
+        initialSelectedTab: "DinoMap",
+        labels: const [
+          "DinoReads",
+          "DinoSearch",
+          "Profile",
+          "DinoMap",
+          "DinoGoal"
+        ],
+        icons: const [
+          Icons.book,
+          Icons.search,
+          Icons.people,
+          Icons.map,
+          Icons.flag
+        ],
+        tabSize: 50,
+        tabBarHeight: 55,
+        textStyle: const TextStyle(
+          fontSize: 12,
+          color: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+        tabIconColor: Colors.blue[600],
+        tabIconSize: 28.0,
+        tabIconSelectedSize: 26.0,
+        tabSelectedColor: Colors.blue[900],
+        tabIconSelectedColor: Colors.white,
+        tabBarColor: Colors.white,
+        onTabItemSelected: (int value) {
+          if (value == 0) {
+            Navigator.pushNamed(context, '/main2');
+          } else if (value == 1) {
+            Navigator.pushNamed(context, '/dinoSearch');
+          } else if (value == 2) {
+            Navigator.pushNamed(context, '/dinocom');
+          } else if (value == 4) {
+            Navigator.pushNamed(context, '/dinogoal');
+          }
+        },
+        badges: [
+          const MotionBadgeWidget(
+            text: '10+',
+            textColor: Colors.white,
+            color: Color.fromARGB(255, 240, 159, 153),
+            size: 18,
+          ),
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(2),
+          ),
+          null,
+          const MotionBadgeWidget(
+            isIndicator: true,
+            color: Colors.blue,
+            size: 7,
+            show: true,
+          ),
+          null,
+        ],
       ),
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-// import 'package:google_maps_flutter/google_maps_flutter.dart';
-// import 'package:google_maps_webservice/places.dart';
-
-// class DinoMaps extends StatefulWidget {
-//   @override
-//   _DinoMapsState createState() => _DinoMapsState();
-// }
-
-// class _DinoMapsState extends State<DinoMaps> {
-//   GoogleMapController? mapController;
-//   final places =
-//       GoogleMapsPlaces(apiKey: 'AIzaSyAFcQFzD4JKAcQYLZvFstKIplzhl64GafU'); // Replace with your API key
-//   late LatLng _center;
-//   Set<Marker> _markers = {};
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _center = const LatLng(13.794282, 100.324058); // Default center (Bangkok)
-//     _getNearbyLibraries(_center);
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Map'),
-//       ),
-//       body: Stack(
-//         children: [
-//           GoogleMap(
-//             onMapCreated: _onMapCreated,
-//             initialCameraPosition: CameraPosition(
-//               target: _center,
-//               zoom: 12.0,
-//             ),
-//             markers: _markers,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-//   void _onMapCreated(GoogleMapController controller) {
-//     setState(() {
-//       mapController = controller;
-//     });
-//   }
-
-//   void _getNearbyLibraries(LatLng location) async {
-//     final response = await places.searchNearbyWithRadius(
-//         Location(lat: location.latitude, lng: location.longitude), 5000,
-//         type: 'library');
-
-//     if (response.isOkay) {
-//       setState(() {
-//         _markers = response.results
-//             .map((result) => Marker(
-//                   markerId: MarkerId(result.placeId),
-//                   position: LatLng(
-//                     result.geometry!.location.lat,
-//                     result.geometry!.location.lng,
-//                   ),
-//                   infoWindow: InfoWindow(
-//                     title: result.name,
-//                     snippet: result.vicinity,
-//                   ),
-//                 ))
-//             .toSet();
-//       });
-//     } else {
-//       print('Error fetching nearby libraries');
-//     }
-//   }
-// }
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'DinoMaps',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//       ),
-//       home: DinoMaps(),
-//     );
-//   }
-// }

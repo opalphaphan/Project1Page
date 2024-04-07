@@ -137,12 +137,12 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
       ),
       bottomNavigationBar: MotionTabBar(
         controller: _motionTabBarController,
-        initialSelectedTab: "DinoMap",
+        initialSelectedTab: "DinoCom",
         labels: const [
           "DinoReads",
           "DinoSearch",
+          "DinoCom",
           "DinoMap",
-          "Profile",
           "DinoGoal"
         ],
         icons: const [

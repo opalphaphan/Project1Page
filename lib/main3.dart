@@ -15,6 +15,7 @@ import 'main2.dart';
 import 'login.dart';
 import 'timer.dart';
 import 'data.dart';
+import 'map.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,11 +41,11 @@ class MyApp extends StatelessWidget {
       // Define routes for navigation
       routes: {
         '/': (context) => SignUpScreen(), // Home route
-         '/main2': (context) => Main2Screen(),
+        '/main2': (context) => Main2Screen(),
         '/summary': (context) => SummaryPage(),
         '/login': (context) => LoginScreen(),
         '/dinoSearch': (context) => BookSearchPage(),
-        '/profile': (context) => Userpage(),
+        '/profile': (context) => LibraryFinder(), // DinoMap
         '/dinocom': (context) => DinoCom(),
         '/dinogoal': (context) => TimerPage(),
         '/main3': (context) => SignUpScreen(),
@@ -59,6 +60,8 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final firestore = FirebaseFirestore.instance;
+  get data => null;
   File? _image;
   final TextEditingController _fullnameController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
@@ -66,12 +69,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   Future<void> _pickImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
+      if (image != null) {
+        _image = File(image.path);
       } else {
         print('No image selected.');
       }
@@ -79,38 +81,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
   }
 
   void registerUser(BuildContext context) async {
-    try {
-      // Create user with email and password
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text.trim(),
-      );
+  try {
+    var imageName = DateTime.now().millisecondsSinceEpoch.toString();
+    var storageRef =
+        FirebaseStorage.instance.ref().child('images/$imageName.jpg');
+    await storageRef.putBlob(_image!);
 
-      // Save additional user data to Firestore
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCredential.user!.uid)
-          .set({
-        'fullname': _fullnameController.text,
-        'username': _usernameController.text,
-        'email': _emailController.text,
-        // Add additional fields as needed
-      });
+    var downloadUrl = await storageRef.getDownloadURL();
 
-      // Optionally, upload profile picture to Firebase Storage and save URL to Firestore
+    // Create user with email and password
+    UserCredential userCredential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: _emailController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
 
-      // Navigate to the SummaryPage and pass the user data as arguments
-      Navigator.pushNamed(context, '/summary', arguments: {
-        'fullname': _fullnameController.text,
-        'username': _usernameController.text,
-        'email': _emailController.text,
-        // Add additional fields as needed
-      });
-    } catch (e) {
-      print('Error registering user: $e');
-    }
+    // Save additional user data to Firestore
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userCredential.user!.uid)
+        .set({
+      'fullname': _fullnameController.text,
+      'username': _usernameController.text,
+      'email': _emailController.text,
+      'image': downloadUrl,
+    });
+
+    // Navigate to the SummaryPage and pass the user data as arguments
+    Navigator.pushNamed(context, '/summary', arguments: {
+      'fullname': _fullnameController.text,
+      'username': _usernameController.text,
+      'email': _emailController.text,
+      'profilePictureUrl': downloadUrl,
+    });
+  } catch (e) {
+    print('Error registering user: $e');
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12.0),
@@ -206,7 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: () => registerUser(context),
                       child: Text('Register'),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color.fromARGB(255, 227, 142, 170),
+                        backgroundColor:
+                            const Color.fromARGB(255, 227, 142, 170),
                         foregroundColor: Colors.white,
                       ),
                     ),
@@ -234,9 +242,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 class SummaryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Extract arguments passed from the SignUpScreen
-    final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    final File? profilePicture = args['profilePicture'] as File?;
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
 
     return Scaffold(
       appBar: AppBar(
@@ -244,15 +251,12 @@ class SummaryPage extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            Text('Account', style: TextStyle(fontSize: 24)),
-            SizedBox(height: 20),
             CircleAvatar(
               radius: 60,
-              backgroundImage: profilePicture != null ? FileImage(profilePicture) : null,
-              child: profilePicture == null
-                  ? Icon(Icons.person, size: 60, color: Colors.grey)
-                  : null,
+              backgroundImage: NetworkImage(args['profilePictureUrl']),
             ),
             SizedBox(height: 20),
             Text('Fullname: ${args['fullname']}'),
