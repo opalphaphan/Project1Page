@@ -104,7 +104,7 @@ class _LibraryFinderState extends State<LibraryFinder> with TickerProviderStateM
               markerId: MarkerId(place['displayName']['text']),
               position: latLng,
               infoWindow: InfoWindow(title: place['displayName']['text']),
-              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+              icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
             ),
           );
         }
