@@ -16,6 +16,7 @@ import 'login.dart';
 import 'timer.dart';
 import 'data.dart';
 import 'map.dart';
+import 'profile.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DinoReads Sign Up',
+      title: 'DinoReads',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: GoogleFonts.poppinsTextTheme(),
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         '/dinocom': (context) => DinoCom(),
         '/dinogoal': (context) => TimerPage(),
         '/main3': (context) => SignUpScreen(),
+        '/temp': (context) => ProfilePage(),
       },
     );
   }
