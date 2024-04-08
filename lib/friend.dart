@@ -4,8 +4,8 @@ import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:project/chat.dart';
-import 'package:project/map.dart';
+import 'package:Project_opal/chat.dart';
+import 'package:Project_opal/map.dart';
 import 'map.dart';
 
 class DinoCom extends StatefulWidget {

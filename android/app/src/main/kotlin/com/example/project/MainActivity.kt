@@ -1,4 +1,4 @@
-package com.example.project
+package com.example.Project_opal
 
 import io.flutter.embedding.android.FlutterActivity
 
