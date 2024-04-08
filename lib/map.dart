@@ -160,6 +160,7 @@ class _LibraryFinderState extends State<LibraryFinder> with TickerProviderStateM
         appBar: PreferredSize(
       preferredSize: Size.fromHeight(80.0), 
       child: AppBar(
+         automaticallyImplyLeading: false,
         title: Image.asset(
           'lib/assets/Dinomap.png', 
           height: 78, 

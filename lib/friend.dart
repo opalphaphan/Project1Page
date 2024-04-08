@@ -1,9 +1,156 @@
+// import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:motion_tab_bar/MotionBadgeWidget.dart';
+// import 'package:motion_tab_bar/MotionTabBar.dart';
+// import 'package:motion_tab_bar/MotionTabBarController.dart';
+// import 'package:google_fonts/google_fonts.dart';
+
+// class DinoCom extends StatefulWidget {
+//   @override
+//   _DinoComState createState() => _DinoComState();
+// }
+
+// class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
+//   MotionTabBarController? _motionTabBarController;
+
+//   @override
+//   void initState() {
+//     super.initState();
+
+//     _motionTabBarController = MotionTabBarController(
+//       initialIndex: 2,
+//       length: 5,
+//       vsync: this,
+//     );
+//   }
+
+//   @override
+//   void dispose() {
+//     super.dispose();
+//     _motionTabBarController!.dispose();
+//   }
+
+//   void _addFriend(String friendName) async {
+//     if (friendName.isNotEmpty) {
+//       try {
+//         await FirebaseFirestore.instance.collection('friends').add({
+//           'name': friendName,
+//         });
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(content: Text('Friend added successfully')),
+//         );
+//       } catch (e) {
+//         print('Error adding friend: $e');
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(content: Text('Failed to add friend')),
+//         );
+//       }
+//     }
+//   }
+
+//   void _deleteFriend(String friendId) async {
+//     try {
+//       await FirebaseFirestore.instance.collection('friends').doc(friendId).delete();
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Friend deleted successfully')),
+//       );
+//     } catch (e) {
+//       print('Error deleting friend: $e');
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Failed to delete friend')),
+//       );
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: PreferredSize(
+//       preferredSize: Size.fromHeight(80.0), 
+//       child: AppBar(
+//         automaticallyImplyLeading: false,
+//         title: Image.asset(
+//           'lib/assets/com.png', 
+//           height: 78, 
+//         ),
+//         backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+//       ),
+//     ),
+//       body: Container(
+//         decoration: BoxDecoration(
+//           image: DecorationImage(
+//             image: AssetImage('lib/assets/bg.png'),
+//             fit: BoxFit.cover,
+//           ),
+//         ),
+//         child: Column(
+//           children: [
+//             Padding(
+//               padding: const EdgeInsets.all(8.0),
+//               child: Row(
+//                 children: [
+//                   Expanded(
+//                     child: TextField(
+//                       onSubmitted: (value) {
+//                         _addFriend(value);
+//                       },
+//                       decoration: InputDecoration(
+//                         labelText: 'Search Friends',
+//                         suffixIcon: Icon(Icons.search),
+//                         border: OutlineInputBorder(
+//                           borderRadius: BorderRadius.all(Radius.circular(25.0)),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Expanded(
+//               child: StreamBuilder<QuerySnapshot>(
+//                 stream: FirebaseFirestore.instance.collection('friends').snapshots(),
+//                 builder: (context, snapshot) {
+//                   if (snapshot.connectionState == ConnectionState.waiting) {
+//                     return Center(child: CircularProgressIndicator());
+//                   } else if (snapshot.hasError) {
+//                     return Center(child: Text('Error: ${snapshot.error}'));
+//                   } else {
+//                     final List<DocumentSnapshot> friends = snapshot.data!.docs;
+//                     return ListView.builder(
+//                       itemCount: friends.length,
+//                       itemBuilder: (context, index) {
+//                         final friendName = friends[index]['name'];
+//                         final friendId = friends[index].id; // Get the document ID
+//                         return ListTile(
+//                           title: Text(friendName),
+//                           leading: CircleAvatar(
+//                             child: Text(friendName[0]), // Display initial of friend name
+//                           ),
+//                           trailing: IconButton(
+//                             icon: Icon(Icons.delete),
+//                             onPressed: () {
+//                               _deleteFriend(friendId); // Call delete function on button press
+//                             },
+//                           ),
+//                         );
+//                       },
+//                     );
+//                   }
+//                 },
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
 import 'package:motion_tab_bar/MotionTabBarController.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:project/chat.dart';
+import 'package:project/map.dart';
+import 'map.dart';
 
 class DinoCom extends StatefulWidget {
   @override
@@ -50,7 +197,10 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
 
   void _deleteFriend(String friendId) async {
     try {
-      await FirebaseFirestore.instance.collection('friends').doc(friendId).delete();
+      await FirebaseFirestore.instance
+          .collection('friends')
+          .doc(friendId)
+          .delete();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Friend deleted successfully')),
       );
@@ -66,16 +216,16 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-      preferredSize: Size.fromHeight(80.0), 
-      child: AppBar(
-        automaticallyImplyLeading: false,
-        title: Image.asset(
-          'lib/assets/com.png', 
-          height: 78, 
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          title: Image.asset(
+            'lib/assets/com.png',
+            height: 78,
+          ),
+          backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
         ),
-        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
       ),
-    ),
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -108,7 +258,9 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
             ),
             Expanded(
               child: StreamBuilder<QuerySnapshot>(
-                stream: FirebaseFirestore.instance.collection('friends').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('friends')
+                    .snapshots(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
@@ -120,16 +272,27 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
                       itemCount: friends.length,
                       itemBuilder: (context, index) {
                         final friendName = friends[index]['name'];
-                        final friendId = friends[index].id; // Get the document ID
+                        final friendId =
+                            friends[index].id; // Get the document ID
                         return ListTile(
                           title: Text(friendName),
-                          leading: CircleAvatar(
-                            child: Text(friendName[0]), // Display initial of friend name
+                          leading: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatScreen(),
+                                  ));
+                            },
+                            child: CircleAvatar(
+                              child: Text(friendName[0]),
+                            ),
                           ),
                           trailing: IconButton(
                             icon: Icon(Icons.delete),
                             onPressed: () {
-                              _deleteFriend(friendId); // Call delete function on button press
+                              _deleteFriend(
+                                  friendId); // Call delete function on button press
                             },
                           ),
                         );

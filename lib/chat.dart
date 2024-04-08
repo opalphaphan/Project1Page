@@ -1,9 +1,9 @@
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
-import 'main2.dart'; 
-import 'summary.dart';
+import 'main2.dart';
 import 'friend.dart';
+import 'summary.dart';
+
 void main() => runApp(ChatApp());
 
 class ChatApp extends StatelessWidget {
@@ -16,7 +16,6 @@ class ChatApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
       home: ChatScreen(),
-      
     );
   }
 }
@@ -37,13 +36,33 @@ class ChatScreenState extends State<ChatScreen> {
         messages.add(Message(text, DateTime.now(), isSentByMe: true));
         _controller.clear();
       });
+
+      Future.delayed(Duration(seconds: 2), () {
+        setState(() {
+        String response = generateResponse(text);
+        messages.add(Message(response, DateTime.now(), isSentByMe: false)); 
+        });
+      });
     }
+  }
+
+  String generateResponse(String receivedMessage) {
+    String response = "";
+    if (receivedMessage.toLowerCase() == 'hi' ||
+        receivedMessage.toLowerCase() == 'hello') {
+      response = "Hi there!";
+    } else if (receivedMessage.toLowerCase().contains('library')) {
+      response = "There's one at the back of ICT building";
+    } else if (receivedMessage.toLowerCase().contains('join')) {
+      response = "Sure. What time should I be there?";
+    }
+    return response;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, 
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text('Chat room'),
         backgroundColor: Colors.white,
@@ -60,7 +79,7 @@ class ChatScreenState extends State<ChatScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("lib/assets/bg.png"), 
+            image: AssetImage("lib/assets/bg.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -85,7 +104,9 @@ class ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: TextField(
                         controller: _controller,
-                        decoration: InputDecoration.collapsed(hintText: 'Send a message'),
+                        onSubmitted: (_) => _sendMessage(),
+                        decoration: InputDecoration.collapsed(
+                            hintText: 'Send a message'),
                       ),
                     ),
                     IconButton(
@@ -120,9 +141,12 @@ class MessageBubble extends StatelessWidget {
     final bubbleAlignment = message.isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final bubbleColor = message.isSentByMe ? Colors.blue[200] : Colors.white;
     final textColor = message.isSentByMe ? Colors.white : Colors.black87;
+    final bubbleMargin = message.isSentByMe ? EdgeInsets.only(left: 50.0, bottom: 10.0) : EdgeInsets.only(right: 50.0, bottom: 10.0);
+    DateTime now = DateTime.now();
+    String time = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     return Padding(
-      padding: const EdgeInsets.all(10.0),
+      padding: bubbleMargin,
       child: Column(
         crossAxisAlignment: bubbleAlignment,
         children: <Widget>[
@@ -132,9 +156,19 @@ class MessageBubble extends StatelessWidget {
               color: bubbleColor,
               borderRadius: BorderRadius.circular(30.0),
             ),
-            child: Text(
-              message.text,
-              style: TextStyle(color: textColor),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  message.text,
+                  style: TextStyle(color: textColor),
+                ),
+                const SizedBox(height: 4), // Add spacing between message and time
+                Text(
+                   time,
+                  style: const TextStyle(color: Colors.black38, fontSize: 12),
+                ),
+              ],
             ),
           ),
         ],
