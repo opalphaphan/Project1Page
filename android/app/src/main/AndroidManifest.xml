@@ -3,8 +3,7 @@
         android:label="project"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
-        <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-        <uses-permission android:name="android.permission.INTERNET"/>
+    
 
         <activity
             android:name=".MainActivity"
@@ -25,13 +24,14 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyAFcQFzD4JKAcQYLZvFstKIplzhl64GafU"/>
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
             
-        <!-- Insert your Google Maps API Key below -->
-        <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAFcQFzD4JKAcQYLZvFstKIplzhl64GafU"/>
+
+    
     </application>
 </manifest>
