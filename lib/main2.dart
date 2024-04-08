@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_tab_bar/MotionBadgeWidget.dart';
 import 'package:motion_tab_bar/MotionTabBar.dart';
@@ -13,6 +14,7 @@ class Main2Screen extends StatefulWidget {
 
 class _Main2ScreenState extends State<Main2Screen>
     with TickerProviderStateMixin {
+  late User _user;
   MotionTabBarController? _motionTabBarController;
   Map<String, dynamic>?
       _selectedQuoteData; // Variable to store selected quote data
@@ -20,6 +22,7 @@ class _Main2ScreenState extends State<Main2Screen>
   @override
   void initState() {
     super.initState();
+    _user = FirebaseAuth.instance.currentUser!;
     _motionTabBarController = MotionTabBarController(
       initialIndex: 0,
       length: 5,
@@ -70,14 +73,25 @@ class _Main2ScreenState extends State<Main2Screen>
                   
                   // Welcome and user profile section
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Welcome back! Lee Anton'),
-                      CircleAvatar(
-                        backgroundImage: AssetImage('lib/assets/anton.jpg'),
-                      ),
-                    ],
-                  ),
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  children: [
+    Text(
+      'Welcome back! ${_user.email}',
+      style: TextStyle(fontSize: 18),
+    ),
+    GestureDetector(
+      onTap: () {
+        // Navigate to the desired page here
+        Navigator.pushNamed(context, '/temp');
+      },
+      child: Icon(
+        Icons.person,
+        size: 50,
+        // You can customize other properties like color, etc.
+      ),
+    ),
+  ],
+),
                   SizedBox(height: 20),
                   // Clock image and reading level progress
                   Container(
