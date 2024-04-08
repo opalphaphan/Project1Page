@@ -39,8 +39,8 @@ class ChatScreenState extends State<ChatScreen> {
 
       Future.delayed(Duration(seconds: 2), () {
         setState(() {
-        String response = generateResponse(text);
-        messages.add(Message(response, DateTime.now(), isSentByMe: false)); 
+          String response = generateResponse(text);
+          messages.add(Message(response, DateTime.now(), isSentByMe: false));
         });
       });
     }
@@ -55,6 +55,8 @@ class ChatScreenState extends State<ChatScreen> {
       response = "There's one at the back of ICT building";
     } else if (receivedMessage.toLowerCase().contains('join')) {
       response = "Sure. What time should I be there?";
+    } else if (receivedMessage.toLowerCase().contains('woon')) {
+      response = "Most narak girl in ICT";
     }
     return response;
   }
@@ -65,9 +67,9 @@ class ChatScreenState extends State<ChatScreen> {
       backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Image.asset(
-            'lib/assets/Dinochat.png',
-            height: 78,
-          ),
+          'lib/assets/Dinochat.png',
+          height: 78,
+        ),
         backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
         elevation: 0,
         actions: [
@@ -141,12 +143,16 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bubbleAlignment = message.isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
+    final bubbleAlignment =
+        message.isSentByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final bubbleColor = message.isSentByMe ? Colors.blue[200] : Colors.white;
     final textColor = message.isSentByMe ? Colors.white : Colors.black87;
-    final bubbleMargin = message.isSentByMe ? EdgeInsets.only(left: 50.0, bottom: 10.0) : EdgeInsets.only(right: 50.0, bottom: 10.0);
+    final bubbleMargin = message.isSentByMe
+        ? EdgeInsets.only(left: 50.0, bottom: 10.0)
+        : EdgeInsets.only(right: 50.0, bottom: 10.0);
     DateTime now = DateTime.now();
-    String time = '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
+    String time =
+        '${now.hour.toString().padLeft(2, '0')}:${now.minute.toString().padLeft(2, '0')}';
 
     return Padding(
       padding: bubbleMargin,
@@ -154,7 +160,8 @@ class MessageBubble extends StatelessWidget {
         crossAxisAlignment: bubbleAlignment,
         children: <Widget>[
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
             decoration: BoxDecoration(
               color: bubbleColor,
               borderRadius: BorderRadius.circular(30.0),
@@ -166,9 +173,10 @@ class MessageBubble extends StatelessWidget {
                   message.text,
                   style: TextStyle(color: textColor),
                 ),
-                const SizedBox(height: 4), // Add spacing between message and time
+                const SizedBox(
+                    height: 4), // Add spacing between message and time
                 Text(
-                   time,
+                  time,
                   style: const TextStyle(color: Colors.black38, fontSize: 12),
                 ),
               ],

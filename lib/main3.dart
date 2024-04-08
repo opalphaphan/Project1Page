@@ -84,12 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void registerUser(BuildContext context) async {
   try {
-    var imageName = DateTime.now().millisecondsSinceEpoch.toString();
-    var storageRef =
-        FirebaseStorage.instance.ref().child('images/$imageName.jpg');
-    await storageRef.putBlob(_image!);
 
-    var downloadUrl = await storageRef.getDownloadURL();
 
     // Create user with email and password
     UserCredential userCredential =
@@ -106,7 +101,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       'fullname': _fullnameController.text,
       'username': _usernameController.text,
       'email': _emailController.text,
-      'image': downloadUrl,
     });
 
     // Navigate to the SummaryPage and pass the user data as arguments
@@ -114,7 +108,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
       'fullname': _fullnameController.text,
       'username': _usernameController.text,
       'email': _emailController.text,
-      'profilePictureUrl': downloadUrl,
     });
   } catch (e) {
     print('Error registering user: $e');
@@ -258,7 +251,6 @@ class SummaryPage extends StatelessWidget {
           children: <Widget>[
             CircleAvatar(
               radius: 60,
-              backgroundImage: NetworkImage(args['profilePictureUrl']),
             ),
             SizedBox(height: 20),
             Text('Fullname: ${args['fullname']}'),
