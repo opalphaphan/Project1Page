@@ -362,7 +362,6 @@
 //     );
 //   }
 // }
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -425,7 +424,7 @@ class _BookSearchPageState extends State<BookSearchPage> {
             controller: _controller,
             decoration: InputDecoration(
               filled: true,
-              fillColor: Colors.white,
+              fillColor: Color.fromARGB(255, 161, 219, 223),
               hintText: 'Search books...',
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(40.0),
@@ -441,24 +440,32 @@ class _BookSearchPageState extends State<BookSearchPage> {
           ),
         ),
       ),
-      body: ListView.builder(
-        itemCount: _books.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: GestureDetector(
-              onTap: () {
-                _showBookDetails(_books[index]);
-              },
-              child: Text(
-                _books[index].title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('lib/assets/bg.png'), // Replace 'assets/background.jpg' with your image path
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: ListView.builder(
+          itemCount: _books.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: GestureDetector(
+                onTap: () {
+                  _showBookDetails(_books[index]);
+                },
+                child: Text(
+                  _books[index].title,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            subtitle: Text(_books[index].author),
-          );
-        },
+              subtitle: Text(_books[index].author),
+            );
+          },
+        ),
       ),
     );
   }
