@@ -38,19 +38,21 @@ class _Main2ScreenState extends State<Main2Screen>
     return DefaultTabController(
       length: 5,
       child: Scaffold(
+         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
          appBar: PreferredSize(
-      preferredSize: Size.fromHeight(70), 
+      preferredSize: Size.fromHeight(80), 
       
       child: AppBar(
         automaticallyImplyLeading: false,
-        
-        title: Image.asset(
-          'lib/assets/dinoread.png', 
-          height: 90, 
-          fit: BoxFit.fitHeight,
+        title: Padding(
+            padding: EdgeInsets.only(top: 1),
+        child: Image.asset(
+          'lib/assets/dnr.png', 
+          height: 270, 
+          width: 320,
+          // fit: BoxFit.fitWidth,
         ),
-
-        backgroundColor: Color.fromRGBO(255, 255, 255, 1),
+        ),
       ),
     ),
         body: SafeArea(

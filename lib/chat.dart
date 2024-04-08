@@ -64,8 +64,11 @@ class ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: Text('Chat room'),
-        backgroundColor: Colors.white,
+        title: Image.asset(
+            'lib/assets/Dinochat.png',
+            height: 78,
+          ),
+        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
         elevation: 0,
         actions: [
           IconButton(

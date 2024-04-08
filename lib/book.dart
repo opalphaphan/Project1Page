@@ -109,7 +109,7 @@ class _BookSearchPageState extends State<BookSearchPage>
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-                'lib/assets/search.png'), // Adjust the path as per your asset's location
+                'lib/assets/bg.png'), // Adjust the path as per your asset's location
             fit: BoxFit.cover,
           ),
         ),
