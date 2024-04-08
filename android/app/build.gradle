@@ -27,7 +27,7 @@ android {
     namespace "com.example.Project_opal"
     compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
-
+    apply plugin: 'com.google.gms.google-services'
     
 
     compileOptions {
@@ -69,5 +69,6 @@ flutter {
 }
 
 dependencies {
+     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation platform('com.google.firebase:firebase-bom:30.2.0')
 }
