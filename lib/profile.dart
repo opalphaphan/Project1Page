@@ -87,6 +87,7 @@ class _ProfilePageState extends State<ProfilePage>
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
+           centerTitle: true,
           title: Image.asset(
             'lib/assets/profile.png',
             height: 70,
@@ -118,12 +119,17 @@ class _ProfilePageState extends State<ProfilePage>
               ),
               SizedBox(height: 20),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _buildButton(context, 'Like', Icons.thumb_up, 'LikedBooks'),
-                  _buildButton(context, 'Save', Icons.save, 'SavedBooks'),
-                  _buildButton(context, 'Finish', Icons.check, 'FinishedBooks'),
-                  _buildButton(context, 'Edit', Icons.edit, ''),
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   children: <Widget>[
+                  SizedBox(
+                    child: _buildButton(context, 'Like', Icons.thumb_up, 'LikedBooks'),
+                  ),
+                  SizedBox(
+                  child: _buildButton(context, 'Save', Icons.save, 'SavedBooks'),
+                  ),
+                  SizedBox(
+                    child: _buildButton(context, 'Finish', Icons.check, 'FinishedBooks'),
+                  ),
                 ],
               ),
               SizedBox(height: 20),
@@ -141,6 +147,14 @@ class _ProfilePageState extends State<ProfilePage>
                     ],
                   ),
                 ),
+              ),
+              Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                   children: <Widget>[
+                  SizedBox(
+                    child: _buildButton(context, 'Edit', Icons.edit, ''),
+                  ),
+                ],
               ),
             ],
           ),

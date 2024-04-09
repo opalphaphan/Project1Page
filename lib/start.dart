@@ -44,7 +44,6 @@ class MyHomePage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          // Sign In Button with blue circular background
           Positioned(
             bottom: 50.0,
             left: 0.0,

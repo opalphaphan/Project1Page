@@ -55,23 +55,46 @@ class ChatScreenState extends State<ChatScreen> {
       response = "There's one at the back of ICT building";
     } else if (receivedMessage.toLowerCase().contains('join')) {
       response = "Sure. What time should I be there?";
-    } else if (receivedMessage.toLowerCase().contains('woon')) {
-      response = "Most narak girl in ICT";
+    } else if (receivedMessage.toLowerCase().contains('snit')) {
+      response = "Flutter book";
+    }else if (receivedMessage.toLowerCase().contains('recommend')) {
+      response = "I sugguest คดีฆาตกรรมบ้านสิบเหลี่ยม";
     }
     return response;
   }
 
   @override
   Widget build(BuildContext context) {
+    // return Scaffold(
+    //   backgroundColor: Colors.transparent,
+    //   appBar: AppBar(
+    //     title: Image.asset(
+    //       'lib/assets/Dinochat.png',
+    //       height: 80,
+    //     ),
+    //     backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+    //     elevation: 0,
+    //     actions: [
+    //       IconButton(
+    //         icon: Icon(Icons.more_vert, color: Colors.black),
+    //         onPressed: () {
+    //           Navigator.pushNamed(context, '/friend');
+    //         },
+    //       ),
+    //     ],
+    //   ),
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: AppBar(
-        title: Image.asset(
-          'lib/assets/Dinochat.png',
-          height: 78,
-        ),
-        backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          centerTitle: true,
+          title: Image.asset(
+            'lib/assets/Dinochat.png',
+            height: 78,
+          ),
+          backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+          elevation: 0,
         actions: [
           IconButton(
             icon: Icon(Icons.more_vert, color: Colors.black),
@@ -80,6 +103,7 @@ class ChatScreenState extends State<ChatScreen> {
             },
           ),
         ],
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -101,7 +125,7 @@ class ChatScreenState extends State<ChatScreen> {
               ),
             ),
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8.0),
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
               color: Colors.white,
               child: SafeArea(
                 child: Row(

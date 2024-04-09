@@ -208,7 +208,6 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // your profile page code...
         Container(
           width: 394,
           height: 823,
@@ -371,7 +370,7 @@ class Profile extends StatelessWidget {
                     const SizedBox(height: 10.09),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 10), // Add vertical padding of 3 units
+                          vertical: 10),
                       child: Text(
                         'ANTONLEE',
                         textAlign: TextAlign.center,
@@ -387,7 +386,7 @@ class Profile extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 7), // Add vertical padding of 3 units
+                          vertical: 7), 
                       child: Text(
                         'antonriize@gmail.com',
                         textAlign: TextAlign.center,
@@ -403,7 +402,7 @@ class Profile extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          vertical: 3), // Add vertical padding of 3 units
+                          vertical: 3), 
                       child: Container(
                         width: 121.13,
                         height: 40.38,
@@ -416,8 +415,7 @@ class Profile extends StatelessWidget {
                         ),
                         child: Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical:
-                                    9), // Example: vertical padding of 10.0 units
+                                vertical: 9), 
                             child: Text(
                               'Edit',
                               textAlign: TextAlign.center,

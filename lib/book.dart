@@ -71,17 +71,16 @@ class _BookSearchPageState extends State<BookSearchPage> with TickerProviderStat
       appBar: AppBar(
         // backgroundColor: Color.fromARGB(0, 195, 231, 235),
         elevation: 0,
+        centerTitle: true,
         title: Padding(
           padding:
-              const EdgeInsets.all(10.0), // Add padding around the TextField
+              const EdgeInsets.all(5.0), // Add padding around the TextField
           child: TextField(
             controller: _controller,
             decoration: InputDecoration(
               filled: true, // Add this line to enable filling the TextField
-              fillColor: Color.fromARGB(
-                  255, 139, 221, 250), // The fill color for the TextField
+              fillColor: Color.fromARGB(255, 139, 221, 250), // The fill color for the TextField
               hintText: 'Search books...',
-
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(40.0), // Rounded corners
                 borderSide: BorderSide.none, // No border
@@ -100,7 +99,7 @@ class _BookSearchPageState extends State<BookSearchPage> with TickerProviderStat
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-                'lib/assets/bg.png'), // Adjust the path as per your asset's location
+                'lib/assets/bg.png'), 
             fit: BoxFit.cover,
           ),
         ),

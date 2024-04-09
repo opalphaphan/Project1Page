@@ -98,6 +98,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
+          centerTitle: true,
           automaticallyImplyLeading: false,
           title: Image.asset(
             'lib/assets/dinotimer.png',
@@ -121,7 +122,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
                 _formatTime(_seconds),
                 style: TextStyle(fontSize: 50),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -129,21 +130,21 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
                     onPressed: _startTimer,
                     child: Text('Start'),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: _stopTimer,
                     child: Text('Stop'),
                     style:
                         ElevatedButton.styleFrom(backgroundColor: Colors.red),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: _restartTimer,
                     child: Text('Restart'),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.yellow),
                   ),
-                  SizedBox(width: 20),
+                  SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: _recordTime,
                     child: Text('Record'),
@@ -152,7 +153,7 @@ class _TimerPageState extends State<TimerPage> with TickerProviderStateMixin {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Expanded(
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance

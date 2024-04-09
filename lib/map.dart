@@ -133,8 +133,6 @@ class _LibraryFinderState extends State<LibraryFinder> with TickerProviderStateM
   }
 
   Future<void> _showLibraryInfo(String libraryName) async {
-    // Replace this with your own logic to fetch detailed information about the library
-    // For now, let's just show a simple alert dialog with the library name
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -161,6 +159,7 @@ class _LibraryFinderState extends State<LibraryFinder> with TickerProviderStateM
       preferredSize: Size.fromHeight(80.0), 
       child: AppBar(
          automaticallyImplyLeading: false,
+         centerTitle: true,
         title: Image.asset(
           'lib/assets/Dinomap.png', 
           height: 78, 

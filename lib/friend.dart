@@ -74,6 +74,7 @@ class _DinoComState extends State<DinoCom> with TickerProviderStateMixin {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(80.0),
         child: AppBar(
+          centerTitle: true,
           automaticallyImplyLeading: false,
           title: Image.asset(
             'lib/assets/com.png',

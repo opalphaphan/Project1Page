@@ -150,7 +150,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Text(
                       'Welcome!\nSign up to DinoReads',
                       style: TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.normal),
+                          fontSize: 14, fontWeight: FontWeight.normal),
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(height: 20),

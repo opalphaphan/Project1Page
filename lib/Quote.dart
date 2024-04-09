@@ -34,7 +34,7 @@ class QuotePopup extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage("your_background_image_path.jpg"), // Replace with your image path
+                image: AssetImage("bg.jpg"), 
                 fit: BoxFit.cover,
               ),
             ),

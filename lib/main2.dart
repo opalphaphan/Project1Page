@@ -47,6 +47,7 @@ class _Main2ScreenState extends State<Main2Screen>
       
       child: AppBar(
         automaticallyImplyLeading: false,
+        centerTitle: true,
         title: Padding(
             padding: EdgeInsets.only(top: 1),
         child: Image.asset(
@@ -84,14 +85,18 @@ class _Main2ScreenState extends State<Main2Screen>
         // Navigate to the desired page here
         Navigator.pushNamed(context, '/temp');
       },
-      child: Icon(
-        Icons.person,
-        size: 50,
-        // You can customize other properties like color, etc.
+      child: CircleAvatar(
+            radius: 20, 
+            child: Icon(
+              Icons.person,
+              size: 30, 
+              color: Colors.white, 
+            ),
+            backgroundColor: Colors.blue,
+          ),
+        ),
+      ],
       ),
-    ),
-  ],
-),
                   SizedBox(height: 20),
                   // Clock image and reading level progress
                   Container(
@@ -123,7 +128,6 @@ class _Main2ScreenState extends State<Main2Screen>
                     ),
                   ),
                   SizedBox(height: 20),
-                  // Show selected quote if available
                   if (_selectedQuoteData != null) ...[
                     Container(
                       padding: EdgeInsets.all(16),
@@ -304,9 +308,24 @@ class AddQuotePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Select or Manage Quotes'),
+ return Scaffold(
+  appBar: PreferredSize(
+    preferredSize: Size.fromHeight(80.0),
+        child: AppBar(
+          centerTitle: true,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'lib/assets/Dinochat.png',
+                height: 80, // Adjust the height as needed
+              ),
+              SizedBox(width: 10), // Add spacing between the image and text
+
+            ],
+          ),
+           backgroundColor: Color.fromRGBO(87, 144, 223, 1.0),
+        ),
       ),
       body: Column(
         children: [
@@ -331,11 +350,18 @@ class AddQuotePage extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => _addQuote(context),
                   child: Text('Add Quote'),
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: Colors.blue, // Text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Rounded corners
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12), // Padding
+                  ),
                 ),
               ],
             ),
           ),
-          Divider(), // Add a divider to separate the form from the list
+          Divider(),
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
               stream:

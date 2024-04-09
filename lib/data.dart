@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple),
-        // useMaterial3: true, // Uncomment this line if useMaterial3 is supported
+    
       ),
       home: const Userpage(title: 'Flutter Demo Home Page'),
     );
