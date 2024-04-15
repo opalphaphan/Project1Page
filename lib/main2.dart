@@ -317,8 +317,8 @@ class AddQuotePage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'lib/assets/Dinochat.png',
-                height: 80, // Adjust the height as needed
+                'lib/assets/quote.png',
+                height: 70, // Adjust the height as needed
               ),
               SizedBox(width: 10), // Add spacing between the image and text
 
